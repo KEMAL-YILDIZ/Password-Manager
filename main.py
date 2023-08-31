@@ -1,5 +1,5 @@
 from tkinter import *
-# from tkinter import messagebox
+from tkinter import messagebox
 import pyperclip
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -28,13 +28,15 @@ class Data(db.Model):
 chars = string.punctuation + string.digits + string.ascii_letters
 chars = list(chars)
 encrypted_list = ['L', '2', '>', '\\', 'j', 'E', '/', ')', '~', 'D', '#', 'x', "'", 'M', 'N', '"', 'P', 'o', '_', 'z',
-                 'n', 'q', '{', 'm', '=', 'A', '&', 'K', 'G', 'd', 'u', '|', 'V', '8', 'g', '}', 's', '9', ']', '<',
-                 'T', 'X', 'y', 'W', '3', 'w', 'Q', '(', 'Z', '4', '-', '@', 'I', 'c', 'S', '[', '*', '.', 'v', ':',
-                 '!', '6', 'B', 'H', 'r', '?', ';', 'Y', 'a', 'k', 'U', 'f', '5', '^', '+', '%', 'i', ',', '`', 'e',
-                 'O', 'F', 'p', 'h', '1', 'b', 't', '7', '0', 'R', 'l', 'C', 'J', '$']
+                  'n', 'q', '{', 'm', '=', 'A', '&', 'K', 'G', 'd', 'u', '|', 'V', '8', 'g', '}', 's', '9', ']', '<',
+                  'T', 'X', 'y', 'W', '3', 'w', 'Q', '(', 'Z', '4', '-', '@', 'I', 'c', 'S', '[', '*', '.', 'v', ':',
+                  '!', '6', 'B', 'H', 'r', '?', ';', 'Y', 'a', 'k', 'U', 'f', '5', '^', '+', '%', 'i', ',', '`', 'e',
+                  'O', 'F', 'p', 'h', '1', 'b', 't', '7', '0', 'R', 'l', 'C', 'J', '$']
 
 
 def encrypt(message: str):
+    """This is a function that will encrypt text according to the index of each letter of the text inside the chars
+     list and produce it as the letter in it's index inside the encrypted_list."""
     cipher_text: str = ""
     for letter in message:
         index = chars.index(letter)
@@ -43,6 +45,8 @@ def encrypt(message: str):
 
 
 def decrypt(cipher_text: str):
+    """This is a funcation that will decrypt codings according to the index of each letter of the coding inside the
+     encrypted_list list and produce it as the letter in it's index inside the chars list."""
     message: str = ""
     for letter in cipher_text:
         index = encrypted_list.index(letter)
@@ -50,9 +54,10 @@ def decrypt(cipher_text: str):
     return message
 
 
-
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
+    """This fucntion will generate a random password and insert it in the password field, additionally it
+     will copy the password into the clipboard."""
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
                'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -80,6 +85,8 @@ def generate_password():
 # ---------------------------- DELETE PASSWORD ---------------------------- #
 
 def delete():
+    """This function will delete a account according to the Website a user has typed inside the website entry,
+     the website account's credentials will be deleted if it's found."""
     website = website_entry.get()
     if len(website) == 0:
         messagebox.showerror(title="Search", message="The Website Field is Required")
@@ -107,6 +114,9 @@ def delete():
 # ---------------------------- EDIT ACCOUNT DETAILS ------------------------------- #
 
 def edit():
+    """This function will allow the user to edit a website credentials on another window that shows
+    the old credentails and the new credentials entries.. if the user doesn't want to edit anything he
+     can leave the entries blank and press submit."""
     website = website_entry.get()
     if len(website) == 0:
         messagebox.showerror(title="Search", message="The Website Field is Required")
@@ -181,12 +191,11 @@ def edit():
             new_password_entry.grid(row=5, column=3, padx=10, pady=5)
 
 
-
-
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 
 def save():
+    """This function will save a account credentails a user has entered."""
     website = website_entry.get().strip()
     email = email_entry.get().strip()
     password = password_entry.get().strip()
@@ -215,6 +224,7 @@ def save():
 # ---------------------------- Search Password ---------------------------- #
 
 def find_password():
+    """This function will search for a website credentails a user has entered."""
     website = website_entry.get()
     if len(website) == 0:
         messagebox.showerror(title="Search", message="The Website Field is Required")
